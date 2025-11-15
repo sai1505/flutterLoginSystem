@@ -13,3 +13,10 @@ final class SigunUpRequest extends AuthEvent {
     required this.password,
   });
 }
+
+final class LoginRequest extends AuthEvent {
+  late final String email;
+  late final String password;
+
+  LoginRequest({required this.email, required this.password});
+}

@@ -5,9 +5,14 @@ sealed class AuthState {}
 
 final class AuthInitial extends AuthState {}
 
-final class AuthSuccess extends AuthState {
-  late final uid;
-  AuthSuccess({required this.uid});
+final class AuthSignupSuccess extends AuthState {
+  late final String uid;
+  AuthSignupSuccess({required this.uid});
+}
+
+final class AuthLoginSuccess extends AuthState {
+  late final String msg;
+  AuthLoginSuccess({required this.msg});
 }
 
 final class AuthError extends AuthState {

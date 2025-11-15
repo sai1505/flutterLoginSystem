@@ -1,3 +1,4 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loginsystem/auth/bloc/auth_bloc.dart';
@@ -30,16 +31,27 @@ class _SignupFormState extends State<SignupForm> {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is AuthError) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(state.error)));
-        } else if (state is AuthSuccess) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(state.uid)));
+          Flushbar(
+            title: "Error",
+            message: state.error,
+            duration: const Duration(seconds: 3),
+            backgroundColor: Colors.red,
+            borderRadius: BorderRadius.circular(12),
+            margin: const EdgeInsets.all(12),
+          ).show(context);
+        } else if (state is AuthSignupSuccess) {
+          Flushbar(
+            title: "Success",
+            message: state.uid,
+            duration: const Duration(seconds: 2),
+            backgroundColor: Colors.blue,
+            borderRadius: BorderRadius.circular(12),
+            margin: const EdgeInsets.all(12),
+          ).show(context);
+
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => LoginPage()),
+            MaterialPageRoute(builder: (context) => const LoginPage()),
           );
         }
       },

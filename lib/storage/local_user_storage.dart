@@ -21,6 +21,21 @@ class LocalUserStorage {
     return users.any((u) => u['email'] == email);
   }
 
+  static Future<Map<String, dynamic>?> getUserByEmail(String email) async {
+    final file = await _getFile();
+    if (!await file.exists()) return null;
+
+    final content = await file.readAsString();
+    if (content.trim().isEmpty) return null;
+
+    final List users = jsonDecode(content);
+
+    for (var u in users) {
+      if (u['email'] == email) return u;
+    }
+    return null;
+  }
+
   static Future<void> saveUser({
     required String name,
     required String email,
